@@ -8,6 +8,19 @@ class Recipe{
 	protected $instructions = array();
 	protected $rating = "Unrated";
 
+	function __construct ($title = null, $source = null){
+		if($title != null){
+			$this->title = $title;
+		}
+		if($source != null){
+			$this->source = $source;
+		}
+	}
+
+	function __toString(){
+		return "You are printing an object of type: ".__CLASS__.". It has a title of " . $this->title;
+	}
+
 	public function setTitle($title){
 		$this->title = ucwords($title);
 	}
@@ -35,10 +48,8 @@ class Recipe{
 			&& 
 			(!in_array(strtolower($measurement), $this->allowedMeasurements))
 		) {
-
 			//This means, they entered a measurement we do not support. Stop them.
 			die($measurement . " is not a valid measurement.");
-
 		}
 
 		$this->ingredients[] = array(
@@ -46,7 +57,15 @@ class Recipe{
 			'amount' => $amount,
 			'measurement' => strtolower($measurement)
 		);
+	}
 
+	public function addInstructions($instructions){
+		//Only param required is item.
+		if(!isset($instructions)) {
+			//This means, they entered a measurement we do not support. Stop them.
+			die('Instruction cannot be empty');
+		}
+		$this->instructions[] = $instructions;
 	}
 
 }
